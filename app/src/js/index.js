@@ -25,36 +25,36 @@ userZip ? console.log('True') : console.log('False');
 console.log(`${userZip}`);
 //Fargo cord. = lat = 46.8772, lon = -96.7898
 
-let lat = 46.8772;
-let lon = -96.7898;
+let lat = '';
+let lon = '';
 
-submitBtn.addEventListener('click', getWeather);
-
-
+submitBtn.addEventListener('click', getLocation);
 
 
-// async function getLocation(e) {
-//   e.preventDefault();
-//   //console.log(`hello from line 32 ${location}`);
-//   try {
-//     const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=58103,us&appid=${APIkey}`);
 
-//     const data = await locationResponse.json();
-//     const cityLocation = Object.values(data);
 
-//     //console.log(cityLocation);
-
-//     lat = (cityLocation[2]);
-//     lon = (cityLocation[3]);
-
-//     getWeather();
-//   } catch (error) {
-//     document.getElementById("APIinfo").innerHTML = error.message;
-//   };
-// };
-
-async function getWeather (e) {
+async function getLocation(e) {
   e.preventDefault();
+  //console.log(`hello from line 32 ${location}`);
+  try {
+    const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=58103,us&appid=${APIkey}`);
+
+    const data = await locationResponse.json();
+    const cityLocation = Object.values(data);
+
+    //console.log(cityLocation);
+
+    lat = (cityLocation[2]);
+    lon = (cityLocation[3]);
+
+    getWeather();
+  } catch (error) {
+    document.getElementById("APIinfo").innerHTML = error.message;
+  };
+};
+
+async function getWeather () {
+  //e.preventDefault();
 try {
   const weatherResponse = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&id=524901&appid=${APIkey}`);
     const data = await weatherResponse.json();
