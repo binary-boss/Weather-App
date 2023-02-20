@@ -35,19 +35,28 @@ submitBtn.addEventListener('click', getLocation);
 async function getLocation(e) {
   e.preventDefault();
 
-  const userZip = Number(document.getElementById('zip').value);
+  const cityState = document.getElementById('cityState').value;
+  //const userInput = Object.entries(cityState);
+  //console.log(cityState);
+
+
+
+  const locatioinArray = cityState.split(',');
+  const city = (locatioinArray[0]);
+  const state = (locatioinArray[1]);
+
  
   //console.log(`hello from line 32 ${location}`);
   try {
-    const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${userZip},us&appid=${APIkey}`);
+    const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},us&limit=5&appid=${APIkey}`);
 
     const data = await locationResponse.json();
     const cityLocation = Object.values(data);
 
     //console.log(cityLocation);
 
-    lat = (cityLocation[2]);
-    lon = (cityLocation[3]);
+    lat = (cityLocation[0]['lat']);
+    lon = (cityLocation[0]['lon']);
 
     getWeather();
   } catch (error) {
@@ -108,7 +117,7 @@ let myString = `
           
      
 `;
-console.log(`${responseCode}`);
+//console.log(`${responseCode}`);
 return myString;
 
   
