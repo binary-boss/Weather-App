@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+#main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to bottom right, #d32865, #1e0376);
+}
+
+#appContainer {
+  width: 400px;
+  height: 700px;
+  border-radius: 10px;
+  background-image: url("../images/sunset3.jpg");
+}
+
+h1 {
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  margin-top: 180px;
+}
+
+#APIinfo {
+  width: 80%;
+  text-align: center;
+}
+
+#myHr {
+  width: 100%;
+  border: 1px solid white;
+  border-radius: 1px;
+  margin: 20px 10px 10px 10px;
+}
+
+form {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#zip {
+  display: block;
+  margin: 0.40rem auto;
+  background-color: #f8f8f8;
+  border: 0.5px solid #c0c0c0;
+  border-radius: 3px;
+  width: 79%;
+  height: 2.3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#submit {
+  background-color: #09376b;
+  width: 79%;
+  height: 2.8rem;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  margin: 0.66rem;
+}
+
+#userCity {
+  margin-top: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+#date {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+  color: white;
+}
+
+.myAlign {
+  width: 80%;
+  text-align: justify;
+  color: white;
+  margin-bottom: 5px;
+  padding-left: 15px;
+}
+
+
+p {
+  margin: 4px;
+}
+
