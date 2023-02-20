@@ -18,11 +18,10 @@
 
 const APIkey = '390a56a4e5743b65dabe7b47f1c4c0f0';
 
-const userZip = document.getElementById('zip').value;
+
 const submitBtn = document.querySelector('#submit');
 
-userZip ? console.log('True') : console.log('False');
-console.log(`${userZip}`);
+
 //Fargo cord. = lat = 46.8772, lon = -96.7898
 
 let lat = '';
@@ -35,9 +34,12 @@ submitBtn.addEventListener('click', getLocation);
 
 async function getLocation(e) {
   e.preventDefault();
+
+  const userZip = Number(document.getElementById('zip').value);
+ 
   //console.log(`hello from line 32 ${location}`);
   try {
-    const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=58103,us&appid=${APIkey}`);
+    const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${userZip},us&appid=${APIkey}`);
 
     const data = await locationResponse.json();
     const cityLocation = Object.values(data);
