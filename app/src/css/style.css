@@ -88,6 +88,13 @@ h1 {
   
 }
 
+#openingMsg {
+  width: 100%;
+  font-size: 17px;
+  color: white;
+  text-align: center;
+}
+
 #myHr {
   width: 100%;
   border: 1px solid white;
