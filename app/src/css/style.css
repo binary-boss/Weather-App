@@ -21,7 +21,8 @@ body {
 }
 
 input {
-  border: 2px solid #ee8907;
+  border: none;
+  appearance: none;
 }
 input:invalid {
   border: 2px dashed red;
@@ -111,6 +112,7 @@ form {
   height: 2.3rem;
   justify-content: center;
   align-items: center;
+  box-shadow: 10px 5px 5px #262323;
 }
 
 #submit {
@@ -122,6 +124,7 @@ form {
   color: #fff;
   margin: 0.66rem;
   transition: all 0.25s ease-in;
+  box-shadow: 10px 5px 5px #262323;
 }
 
 #submit:hover {
@@ -135,7 +138,6 @@ form {
   font-size: 22px;
   font-weight: bold;
   color: white;
-  
 }
 
 

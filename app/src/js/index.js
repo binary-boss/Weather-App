@@ -40,26 +40,34 @@ async function getLocation(e) {
   //prompt user to enter city and state
   if (cityState) {
 
+    //Turn string from user input into an array
+    //Get city and state from array elements
     const locatioinArray = cityState.split(',');
     const city = (locatioinArray[0]);
     const state = (locatioinArray[1]);
     
-    //console.log(`hello from line 32 ${location}`);
+    
     try {
       const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},us&limit=5&appid=${APIkey}`);
 
       const data = await locationResponse.json();
       const cityLocation = Object.values(data);
 
-      //console.log(cityLocation);
-
+     
+      //Get latitude and longitude from data obj
       lat = (cityLocation[0]['lat']);
       lon = (cityLocation[0]['lon']);
 
+      //lat and lon variables are now populated.
+      //Run getweather function
       getWeather();
+
+
     } catch (error) {
+
      const  errormsg = `<div id='error'>Invalid input. Please enter city and state.</div>`;
       document.getElementById("APIinfo").innerHTML = errormsg;
+
     };
    
     } else {
@@ -70,16 +78,8 @@ async function getLocation(e) {
 
 } 
 
-  
-
-
-
-
-  
-
  
-  
-
+//Call API with lat and log cordinates
 async function getWeather () {
   //e.preventDefault();
 try {
@@ -87,12 +87,14 @@ try {
     const data = await weatherResponse.json();
     const myCity = Object.values(data);
     //console.log(myCity);
-   
+      //Call render function to get weather info from array Obj
+      //Then add pre-build html block from reder return function with weather data
       const APIdata = render(data);
       document.getElementById("APIinfo").innerHTML = APIdata;
    
 } catch (error) {
-  document.getElementById("APIinfo").innerHTML = error.message;
+  const errormsgWeather = `<div id='error'>Error processing!</div>`;
+  document.getElementById("APIinfo").innerHTML = errormsgWeather;
 };
 
 
@@ -101,7 +103,7 @@ try {
 
 const render = function (arrObj) {
 
-  //turn object into an array of arrays
+//turn object into an array of arrays
 const myCity = Object.values(arrObj);
 const responseCode = myCity[0]; 
 const myNewCity = (myCity[4]['name']);
@@ -122,6 +124,7 @@ const lowTemp = (myCity[3][0]['main']['temp_min']);
 const convLowTemp = convertKelvin(temp);
 
 //console.log(myCity);
+//Insert data into HTML divs. Then send back to caller
 let myString = `    
           <div id="userCity">${myNewCity}, ${userCountry}</div>
           <div id="date">${convertedDate}</div>
@@ -134,12 +137,16 @@ let myString = `
           
      
 `;
-console.log(`${responseCode}`);
+
+//Access code
+//console.log(`${responseCode}`);
 return myString;
 
   
 } ;
 
+
+//Convert date format
 function convertDate(date) {
   const numDate = date.split(' ');
   const shortDate = numDate[0].split('-');
@@ -153,6 +160,7 @@ function convertDate(date) {
   return myFinishedDate;
 };
 
+//Convert temps
 function convertKelvin(kelvin) {
   const newTemp = Math.round((kelvin - 273.15) * 9 / 5 + 32 * 10 /10);
 
