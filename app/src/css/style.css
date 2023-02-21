@@ -61,11 +61,10 @@ input:invalid:focus {
 }
 
 #appContainer {
-  width: 500px;
+  width: 480px;
   height: 700px;
   border-radius: 10px;
   background-image: url("../images/sunset3.jpg");
-  border: 1px solid black;
 }
 
 h1 {
