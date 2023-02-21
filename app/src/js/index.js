@@ -43,7 +43,7 @@ async function getLocation(e) {
     const locatioinArray = cityState.split(',');
     const city = (locatioinArray[0]);
     const state = (locatioinArray[1]);
-
+    
     //console.log(`hello from line 32 ${location}`);
     try {
       const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},us&limit=5&appid=${APIkey}`);
@@ -58,9 +58,10 @@ async function getLocation(e) {
 
       getWeather();
     } catch (error) {
-      document.getElementById("APIinfo").innerHTML = error.message;
+     const  errormsg = `<div id='error'>Invalid input. Please enter city and state.</div>`;
+      document.getElementById("APIinfo").innerHTML = errormsg;
     };
-
+   
     } else {
       const msg = `<div id='error'>Input field cannot be empty.<br/>Please enter a city and state.</div>`;
       document.getElementById("APIinfo").innerHTML = msg;
