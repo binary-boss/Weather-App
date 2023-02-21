@@ -20,6 +20,43 @@ body {
   background-image: linear-gradient(to bottom right, #d32865, #1e0376);
 }
 
+input {
+  border: 2px solid #ee8907;
+}
+input:invalid {
+  border: 2px dashed red;
+}
+input:invalid:focus {
+  border: 2px solid red;
+}
+
+#error {
+  color: white;
+  border: 4px solid #d32865;
+  border-radius: 3px;
+}
+
+
+@keyframes appear {
+  from {
+    opacity: 0.0;
+  } 
+  to {
+    opacity: 1.0;
+  }
+}
+
+@keyframes moveDown {
+  from {
+   
+    top: -190px;
+  } 
+  to {
+    
+    top: 0px;
+  }
+}
+
 #appContainer {
   width: 400px;
   height: 700px;
@@ -28,14 +65,22 @@ body {
 }
 
 h1 {
-  font-family: 'Quicksand', sans-serif;
+  font-family:  'Ubuntu', sans-serif;
   text-align: center;
   margin-top: 180px;
+  color: white;
+  position: relative;
+  animation: appear 3s ease-in-out 0s forwards;
+  animation: moveDown 2s ease-in 0s forwards;
 }
+
+
 
 #APIinfo {
   width: 80%;
   text-align: center;
+  position: relative;
+  
 }
 
 #myHr {
@@ -52,6 +97,8 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  animation: appear 2.7s ease-in-out 0s forwards;
+  
 }
 
 #cityState {
@@ -74,6 +121,12 @@ form {
   border-radius: 4px;
   color: #fff;
   margin: 0.66rem;
+  transition: all 0.25s ease-in;
+}
+
+#submit:hover {
+  transform: scale(1.04);
+  border: 2px solid #ee8907;
 }
 
 #userCity {
@@ -82,7 +135,9 @@ form {
   font-size: 22px;
   font-weight: bold;
   color: white;
+  
 }
+
 
 #date {
   font-family: Verdana, Geneva, Tahoma, sans-serif;

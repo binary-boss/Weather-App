@@ -29,40 +29,55 @@ let lon = '';
 
 submitBtn.addEventListener('click', getLocation);
 
-
-
-
 async function getLocation(e) {
   e.preventDefault();
 
   const cityState = document.getElementById('cityState').value;
-  //const userInput = Object.entries(cityState);
   //console.log(cityState);
 
 
+  //Big if block to catch empty input field error, prevent from attemping to connect to API when empty
+  //prompt user to enter city and state
+  if (cityState) {
 
-  const locatioinArray = cityState.split(',');
-  const city = (locatioinArray[0]);
-  const state = (locatioinArray[1]);
+    const locatioinArray = cityState.split(',');
+    const city = (locatioinArray[0]);
+    const state = (locatioinArray[1]);
+
+    //console.log(`hello from line 32 ${location}`);
+    try {
+      const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},us&limit=5&appid=${APIkey}`);
+
+      const data = await locationResponse.json();
+      const cityLocation = Object.values(data);
+
+      //console.log(cityLocation);
+
+      lat = (cityLocation[0]['lat']);
+      lon = (cityLocation[0]['lon']);
+
+      getWeather();
+    } catch (error) {
+      document.getElementById("APIinfo").innerHTML = error.message;
+    };
+
+    } else {
+      const msg = `<div id='error'>Input field cannot be empty.<br/>Please enter a city and state.</div>`;
+      document.getElementById("APIinfo").innerHTML = msg;
+  };
+
+
+} 
+
+  
+
+
+
+
+  
 
  
-  //console.log(`hello from line 32 ${location}`);
-  try {
-    const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},us&limit=5&appid=${APIkey}`);
-
-    const data = await locationResponse.json();
-    const cityLocation = Object.values(data);
-
-    //console.log(cityLocation);
-
-    lat = (cityLocation[0]['lat']);
-    lon = (cityLocation[0]['lon']);
-
-    getWeather();
-  } catch (error) {
-    document.getElementById("APIinfo").innerHTML = error.message;
-  };
-};
+  
 
 async function getWeather () {
   //e.preventDefault();
@@ -71,9 +86,10 @@ try {
     const data = await weatherResponse.json();
     const myCity = Object.values(data);
     //console.log(myCity);
-    const APIdata = render(data);
-       
-    document.getElementById("APIinfo").innerHTML = APIdata;
+   
+      const APIdata = render(data);
+      document.getElementById("APIinfo").innerHTML = APIdata;
+   
 } catch (error) {
   document.getElementById("APIinfo").innerHTML = error.message;
 };
@@ -86,7 +102,7 @@ const render = function (arrObj) {
 
   //turn object into an array of arrays
 const myCity = Object.values(arrObj);
-const responseCode = myCity[0];
+const responseCode = myCity[0]; 
 const myNewCity = (myCity[4]['name']);
 const userCountry = (myCity[4]['country']);
 
@@ -117,7 +133,7 @@ let myString = `
           
      
 `;
-//console.log(`${responseCode}`);
+console.log(`${responseCode}`);
 return myString;
 
   
@@ -137,7 +153,7 @@ function convertDate(date) {
 };
 
 function convertKelvin(kelvin) {
-  const newTemp = Math.round((kelvin - 273.15) * 9 / 5 + 32) * 10 /10;
+  const newTemp = Math.round((kelvin - 273.15) * 9 / 5 + 32 * 10 /10);
 
 return newTemp;
 }
