@@ -133,7 +133,7 @@ let myString = `
 
           <div class="myAlign">Temp:  ${convTemp}&#8457;</div>
           <div class="myAlign">Weather:  ${weather}</div>
-          <div class="myAlign">Temp Range:  ${convhighTemp}&#8457; / ${convLowTemp}&#8457;</div>
+          <div class="myAlign">Temp Range: ${convhighTemp}&#8457; / ${convLowTemp}&#8457;</div>
           
      
 `;
@@ -162,7 +162,8 @@ function convertDate(date) {
 
 //Convert temps
 function convertKelvin(kelvin) {
-  const newTemp = Math.round((kelvin - 273.15) * 9 / 5 + 32 * 10 /10);
-
-return newTemp;
+  const newTemp = (kelvin - 273.15) * 9 / 5 + 32 * 10 /10;
+  //const convertedTemp = newTemp.toFixed(1);
+  const convertedTemp = Math.round(newTemp);
+return convertedTemp;
 }

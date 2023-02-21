@@ -23,6 +23,8 @@ body {
 input {
   border: none;
   appearance: none;
+  font-family: 'Ubuntu',Tahoma, sans-serif;
+  font-size: 20px;
 }
 input:invalid {
   border: 2px dashed red;
@@ -59,14 +61,16 @@ input:invalid:focus {
 }
 
 #appContainer {
-  width: 400px;
+  width: 500px;
   height: 700px;
   border-radius: 10px;
   background-image: url("../images/sunset3.jpg");
+  border: 1px solid black;
 }
 
 h1 {
   font-family:  'Ubuntu', sans-serif;
+  font-size: 40px;
   text-align: center;
   margin-top: 180px;
   color: white;
@@ -135,7 +139,7 @@ form {
 #userCity {
   margin-top: 30px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 22px;
+  font-size: 27px;
   font-weight: bold;
   color: white;
 }
@@ -143,12 +147,13 @@ form {
 
 #date {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   color: white;
 }
 
 .myAlign {
   width: 80%;
+  font-size: 20px;
   text-align: justify;
   color: white;
   margin-bottom: 5px;
