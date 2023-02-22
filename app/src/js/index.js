@@ -32,27 +32,27 @@ submitBtn.addEventListener('click', getLocation);
 async function getLocation(e) {
   e.preventDefault();
 
-  const cityState = document.getElementById('cityState').value;
-  //console.log(cityState);
+  const inputCity = document.getElementById('city').value;
+  //console.log(inputCity);
 
 
   //Big if block to catch empty input field error, prevent from attemping to connect to API when empty
   //prompt user to enter city and state
-  if (cityState) {
+  if (inputCity) {
 
     //Turn string from user input into an array
     //Get city and state from array elements
-    const locatioinArray = cityState.split(',');
+    const locatioinArray = inputCity.split(',');
     const city = (locatioinArray[0]);
     const state = (locatioinArray[1]);
     
     
     try {
-      const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},us&limit=5&appid=${APIkey}`);
+      const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},us&limit=5&appid=${APIkey}`);
 
       const data = await locationResponse.json();
       const cityLocation = Object.values(data);
-
+      //console.log(cityLocation);
      
       //Get latitude and longitude from data obj
       lat = (cityLocation[0]['lat']);
@@ -65,13 +65,13 @@ async function getLocation(e) {
 
     } catch (error) {
 
-     const  errormsg = `<div id='error'>Invalid input. Please enter city and state.</div>`;
+     const  errormsg = `<div id='error'>Invalid input. Please enter city.</div>`;
       document.getElementById("APIinfo").innerHTML = errormsg;
 
     };
    
     } else {
-      const msg = `<div id='error'>Input field cannot be empty.<br/>Please enter a city and state.</div>`;
+      const msg = `<div id='error'>Input field cannot be empty.<br/>Please enter a city.</div>`;
       document.getElementById("APIinfo").innerHTML = msg;
   };
 
@@ -105,6 +105,8 @@ const render = function (arrObj) {
 
 //turn object into an array of arrays
 const myCity = Object.values(arrObj);
+console.log(myCity);
+
 const responseCode = myCity[0]; 
 const myNewCity = (myCity[4]['name']);
 const userCountry = (myCity[4]['country']);
