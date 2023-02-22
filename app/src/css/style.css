@@ -64,7 +64,7 @@ input:valid:focus {
 }
 
 #appContainer {
-  width: 450px;
+  width: 460px;
   height: 780px;
   border-radius: 10px;
   background-image: url("../images/sunset3.jpg");
@@ -72,7 +72,7 @@ input:valid:focus {
 
 h1 {
   font-family:  'Ubuntu', sans-serif;
-  font-size: 40px;
+  font-size: 38px;
   text-align: center;
   margin-top: 180px;
   color: white;
@@ -161,7 +161,7 @@ form {
 
 .myAlign {
   width: 80%;
-  font-size: 20px;
+  font-size: 18px;
   text-align: justify;
   color: white;
   margin-bottom: 5px;

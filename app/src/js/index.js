@@ -115,7 +115,8 @@ const convertedDate = convertDate(todaysDate);
 const temp = (myCity[3][0]['main']['temp']);
 const convTemp = convertKelvin(temp);
 
-const weather = (myCity[3][0]['weather'][0]['description'])
+let weather = (myCity[3][0]['weather'][0]['description'])
+weather = capitalizeFirstLetter(weather);
 
 const highTemp = (myCity[3][0]['main']['temp_max']);
 const convhighTemp = convertKelvin(temp);
@@ -132,7 +133,7 @@ let myString = `
           <div id="myHr"></div>
 
           <div class="myAlign">Temp:  ${convTemp}&#8457;</div>
-          <div class="myAlign">Weather:  ${weather}</div>
+          <div class="myAlign">Weather: ${weather}</div>
           <div class="myAlign">Temp Range: ${convhighTemp}&#8457; / ${convLowTemp}&#8457;</div>
           
      
