@@ -65,7 +65,7 @@ input:valid:focus {
 
 #appContainer {
   width: 480px;
-  height: 700px;
+  height: 800px;
   border-radius: 10px;
   background-image: url("../images/sunset3.jpg");
 }
@@ -89,6 +89,7 @@ h1 {
 }
 
 #openingMsg {
+  margin-top: 10px;
   width: 100%;
   font-size: 17px;
   color: white;
@@ -119,17 +120,16 @@ form {
   background-color: #f8f8f8;
   border: 0.5px solid #c0c0c0;
   border-radius: 6px;
-  width: 79%;
+  width: 75%;
   height: 2.3rem;
   justify-content: center;
   align-items: center;
-  box-shadow: 10px 5px 5px #262323;
 }
 
 #submit {
-  background-color: #09376b;
+  background-color: #0e3e75;
   font-size: 20px;
-  width: 79%;
+  width: 75%;
   height: 2.8rem;
   border: none;
   border-radius: 6px;
@@ -145,7 +145,7 @@ form {
 }
 
 #userCity {
-  margin-top: 30px;
+  margin-top: 40px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 27px;
   font-weight: bold;
@@ -153,6 +153,7 @@ form {
 }
 
 #date {
+  margin-top: 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 20px;
   color: white;
