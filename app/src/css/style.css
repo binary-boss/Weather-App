@@ -64,8 +64,8 @@ input:valid:focus {
 }
 
 #appContainer {
-  width: 480px;
-  height: 800px;
+  width: 450px;
+  height: 780px;
   border-radius: 10px;
   background-image: url("../images/sunset3.jpg");
 }

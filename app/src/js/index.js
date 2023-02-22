@@ -146,6 +146,7 @@ return myString;
 } ;
 
 
+
 //Convert date format
 function convertDate(date) {
   const numDate = date.split(' ');
@@ -156,8 +157,47 @@ function convertDate(date) {
 
   const convertString = new Date(yr, month - 1, mydate);
   const myFinishedDate = (convertString.toDateString());
+  
+  const months = 
+    {
+      jan: "january",
+      feb: "february",
+      mar: "march",
+      apr: "april",
+      may: "may",
+      jun: "june",
+      jul: "july",
+      aug: "august",
+      sept: "september",
+      oct: "october",
+      nov: "november",
+      dec: "december"
+    };
+  
+  const tempDate = myFinishedDate;
+  const dateArray = tempDate.split(' ');
+  
+    //find key in month and replace abbreviated month to non-abbreviated
+    //Then send non-abreviated month to get first letter capitalized.
+    //Then save formatted month back to original element.
+  if (Object.keys(months).includes(dateArray[1].toLowerCase())) {
+    dateArray[1] = months[dateArray[1].toLowerCase()];
+    dateArray[1] = capitalizeFirstLetter(dateArray[1]);
+  } else {
+    console.log('Problem with processing date.');
+  }
+  
+  //save day with coma
+  const day = dateArray[0] + ', ';
 
-  return myFinishedDate;
+  //replace all comas from split with spaces
+  const dateStr = dateArray.toString().replaceAll(',', ' ');
+
+  //Slice up date to add one coma back after day
+  const dateStrSliced = dateStr.slice(4);
+  const finalDate = day + dateStrSliced;
+
+  return finalDate;
 };
 
 //Convert temps
@@ -166,4 +206,8 @@ function convertKelvin(kelvin) {
   //const convertedTemp = newTemp.toFixed(1);
   const convertedTemp = Math.round(newTemp);
 return convertedTemp;
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
