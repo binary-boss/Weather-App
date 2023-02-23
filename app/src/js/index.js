@@ -30,26 +30,32 @@ async function getLocation(e) {
   const city = document.getElementById('city').value;
   //console.log(inputCity);
 
-
   //Big if block to catch empty input field error, prevent from attemping to connect to API when empty
   //prompt user to enter city.
   if (city) {
     
     try {
-      const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},us&limit=5&appid=${APIkey}`);
-
-      const data = await locationResponse.json();
-      const cityLocation = Object.values(data);
-      //console.log(cityLocation);
      
-      //Get latitude and longitude from data obj
-      lat = (cityLocation[0]['lat']);
-      lon = (cityLocation[0]['lon']);
+        const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},us&limit=5&appid=${APIkey}`);
 
-      //lat and lon variables are now populated.
-      //Run getweather function
-      getWeather();
+        const data = await locationResponse.json();
+        const cityLocation = Object.values(data);
+        //console.log(cityLocation);
+       
+        //Get latitude and longitude from data obj
+        lat = (cityLocation[0]['lat']);
+        lon = (cityLocation[0]['lon']);
 
+       
+
+        const weatherResponse = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&id=524901&appid=${APIkey}`);
+        const data1 = await weatherResponse.json();
+        const myCity = Object.values(data1);
+        //console.log(myCity);
+        //Call render function to get weather info from array Obj
+        //Then add pre-build html block from render's return function with weather data inserted.
+        const APIdata = render(myCity);
+        document.getElementById("APIinfo").innerHTML = APIdata;
 
     } catch (error) {
 
@@ -62,32 +68,8 @@ async function getLocation(e) {
       const msg = `<div id='error'>Input field cannot be empty.<br/>Please enter a city.</div>`;
       document.getElementById("APIinfo").innerHTML = msg;
   };
-
-
 } 
 
- 
-//Call API with lat and log cordinates
-async function getWeather () {
-  //e.preventDefault();
-try {
-  const weatherResponse = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&id=524901&appid=${APIkey}`);
-    const data = await weatherResponse.json();
-    const myCity = Object.values(data);
-    //console.log(myCity);
-      //Call render function to get weather info from array Obj
-      //Then add pre-build html block from render's return function with weather data inserted.
-      const APIdata = render(data);
-      document.getElementById("APIinfo").innerHTML = APIdata;
-   
-} catch (error) {
-  const errormsgWeather = `<div id='error'>Error processing!</div>`;
-  document.getElementById("APIinfo").innerHTML = errormsgWeather;
-};
-
-
-
-};
 
 const render = function (arrObj) {
 
@@ -124,19 +106,12 @@ let myString = `
 
           <div class="myAlign">Temp:  ${convTemp}&#8457;</div>
           <div class="myAlign">Weather: ${weather}</div>
-          <div class="myAlign">Temp Range: ${convhighTemp}&#8457; / ${convLowTemp}&#8457;</div>
-          
-     
-`;
+          <div class="myAlign">Temp Range: ${convhighTemp}&#8457; / ${convLowTemp}&#8457;</div>`;
 
 //Access code
 //console.log(`${responseCode}`);
-return myString;
-
-  
+return myString; 
 } ;
-
-
 
 //Convert date format
 function convertDate(date) {
@@ -144,7 +119,6 @@ function convertDate(date) {
 
   //Deconstruct numeric date
   const [yr, month, mydate] = numDate[0].split('-');
-
 
   const convertString = new Date(yr, month - 1, mydate);
   const myFinishedDate = (convertString.toDateString());
@@ -183,18 +157,14 @@ function convertDate(date) {
   const dateStr = dateArray.toString().replaceAll(',', ' ');
 
   //Slice up date to add one comma back after day
-  const finalDate = day + dateStr.slice(4);
-
-  return finalDate;
+  return day + dateStr.slice(4); 
 };
 
 //Convert temps
 function convertKelvin(kelvin) {
-  const newTemp = Math.round((kelvin - 273.15) * 9 / 5 + 32 * 10 /10);
- 
-return newTemp;
-}
+  return Math.round((kelvin - 273.15) * 9 / 5 + 32 * 10 /10);
+};
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
