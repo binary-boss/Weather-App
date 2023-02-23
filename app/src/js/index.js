@@ -28,30 +28,30 @@ async function getLocation(e) {
   e.preventDefault();
 
   const city = document.getElementById('city').value;
-  //console.log(inputCity);
 
   //Big if block to catch empty input field error, prevent from attemping to connect to API when empty
   //prompt user to enter city.
   if (city) {
     
     try {
-     
+        //API call 1
+        //Take user input city to get latitude and longitude cordinates
         const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},us&limit=5&appid=${APIkey}`);
 
         const data = await locationResponse.json();
         const cityLocation = Object.values(data);
-        //console.log(cityLocation);
        
         //Get latitude and longitude from data obj
         lat = (cityLocation[0]['lat']);
         lon = (cityLocation[0]['lon']);
 
        
-
+        //API call 2
+        //Send lat and lon cordinates and get weather data
         const weatherResponse = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&id=524901&appid=${APIkey}`);
         const data1 = await weatherResponse.json();
         const myCity = Object.values(data1);
-        //console.log(myCity);
+   
         //Call render function to get weather info from array Obj
         //Then add pre-build html block from render's return function with weather data inserted.
         const APIdata = render(myCity);
@@ -75,7 +75,6 @@ const render = function (arrObj) {
 
 //turn object into an array of arrays
 const myCity = Object.values(arrObj);
-//console.log(myCity);
 
 const responseCode = myCity[0]; 
 const myNewCity = (myCity[4]['name']);
@@ -96,7 +95,6 @@ const convhighTemp = convertKelvin(temp);
 const lowTemp = (myCity[3][0]['main']['temp_min']);
 const convLowTemp = convertKelvin(temp);
 
-//console.log(myCity);
 //Insert data into HTML divs. Then send back to caller
 let myString = `    
           <div id="userCity">${myNewCity}, ${userCountry}</div>
