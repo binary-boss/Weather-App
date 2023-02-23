@@ -17,12 +17,7 @@
 */
 
 const APIkey = '390a56a4e5743b65dabe7b47f1c4c0f0';
-
-
 const submitBtn = document.querySelector('#submit');
-
-
-//Fargo cord. = lat = 46.8772, lon = -96.7898
 
 let lat = '';
 let lon = '';
@@ -32,20 +27,13 @@ submitBtn.addEventListener('click', getLocation);
 async function getLocation(e) {
   e.preventDefault();
 
-  const inputCity = document.getElementById('city').value;
+  const city = document.getElementById('city').value;
   //console.log(inputCity);
 
 
   //Big if block to catch empty input field error, prevent from attemping to connect to API when empty
-  //prompt user to enter city and state
-  if (inputCity) {
-
-    //Turn string from user input into an array
-    //Get city and state from array elements
-    const locatioinArray = inputCity.split(',');
-    const city = (locatioinArray[0]);
-    const state = (locatioinArray[1]);
-    
+  //prompt user to enter city.
+  if (city) {
     
     try {
       const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},us&limit=5&appid=${APIkey}`);
@@ -88,7 +76,7 @@ try {
     const myCity = Object.values(data);
     //console.log(myCity);
       //Call render function to get weather info from array Obj
-      //Then add pre-build html block from reder return function with weather data
+      //Then add pre-build html block from render's return function with weather data inserted.
       const APIdata = render(data);
       document.getElementById("APIinfo").innerHTML = APIdata;
    
@@ -105,7 +93,7 @@ const render = function (arrObj) {
 
 //turn object into an array of arrays
 const myCity = Object.values(arrObj);
-console.log(myCity);
+//console.log(myCity);
 
 const responseCode = myCity[0]; 
 const myNewCity = (myCity[4]['name']);
@@ -153,10 +141,10 @@ return myString;
 //Convert date format
 function convertDate(date) {
   const numDate = date.split(' ');
-  const shortDate = numDate[0].split('-');
-  const yr = shortDate[0];
-  const month = shortDate[1];
-  const mydate = shortDate[2];
+
+  //Deconstruct numeric date
+  const [yr, month, mydate] = numDate[0].split('-');
+
 
   const convertString = new Date(yr, month - 1, mydate);
   const myFinishedDate = (convertString.toDateString());
@@ -176,39 +164,35 @@ function convertDate(date) {
       nov: "november",
       dec: "december"
     };
-  
-  const tempDate = myFinishedDate;
-  const dateArray = tempDate.split(' ');
+  //Use split to turn string into an array
+  const dateArray = myFinishedDate.split(' ');
   
     //find key in month and replace abbreviated month to non-abbreviated
     //Then send non-abreviated month to get first letter capitalized.
     //Then save formatted month back to original element.
   if (Object.keys(months).includes(dateArray[1].toLowerCase())) {
-    dateArray[1] = months[dateArray[1].toLowerCase()];
-    dateArray[1] = capitalizeFirstLetter(dateArray[1]);
+    dateArray[1] = capitalizeFirstLetter(months[dateArray[1].toLowerCase()]);
   } else {
     console.log('Problem with processing date.');
   }
   
-  //save day with coma
+  //save day with comma
   const day = dateArray[0] + ', ';
 
-  //replace all comas from split with spaces
+  //replace all commas from split with spaces
   const dateStr = dateArray.toString().replaceAll(',', ' ');
 
-  //Slice up date to add one coma back after day
-  const dateStrSliced = dateStr.slice(4);
-  const finalDate = day + dateStrSliced;
+  //Slice up date to add one comma back after day
+  const finalDate = day + dateStr.slice(4);
 
   return finalDate;
 };
 
 //Convert temps
 function convertKelvin(kelvin) {
-  const newTemp = (kelvin - 273.15) * 9 / 5 + 32 * 10 /10;
-  //const convertedTemp = newTemp.toFixed(1);
-  const convertedTemp = Math.round(newTemp);
-return convertedTemp;
+  const newTemp = Math.round((kelvin - 273.15) * 9 / 5 + 32 * 10 /10);
+ 
+return newTemp;
 }
 
 function capitalizeFirstLetter(string) {
