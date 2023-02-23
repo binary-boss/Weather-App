@@ -79,11 +79,11 @@ const responseCode = myCity[0];
 const myNewCity = (myCity[4]['name']);
 const userCountry = (myCity[4]['country']);
 
-const todaysDate = (myCity[3][0]['dt_txt']);
+//const todaysDate = (myCity[3][0]['dt_txt']);
+const todaysDate = Date().toString().split(' ');
 const convertedDate = convertDate(todaysDate);
 
 const temp = Math.round((myCity[3][0]['main']['temp']));
-console.log(temp);
 
 let weather = (myCity[3][0]['weather'][0]['description'])
 weather = capitalizeFirstLetter(weather);
@@ -109,15 +109,13 @@ return myString;
 } ;
 
 //Convert date format
-function convertDate(date) {
-  const numDate = date.split(' ');
+function convertDate(todaysDate) {
 
   //Deconstruct numeric date
-  const [yr, month, mydate] = numDate[0].split('-');
+  let [dayElem, monthElem, dateELem, yearElem] = todaysDate;
+  //console.log(dayElem + monthElem + dateELem + yearElem);
 
-  const convertString = new Date(yr, month - 1, mydate);
-  const myFinishedDate = (convertString.toDateString());
-  
+//months obj use for reference for month abbreviations  
   const months = 
     {
       jan: "january",
@@ -133,26 +131,18 @@ function convertDate(date) {
       nov: "november",
       dec: "december"
     };
-  //Use split to turn string into an array
-  const dateArray = myFinishedDate.split(' ');
-  
-    //find key in month and replace abbreviated month to non-abbreviated
-    //Then send non-abreviated month to get first letter capitalized.
-    //Then save formatted month back to original element.
-  if (Object.keys(months).includes(dateArray[1].toLowerCase())) {
-    dateArray[1] = capitalizeFirstLetter(months[dateArray[1].toLowerCase()]);
-  } else {
-    console.log('Problem with processing date.');
-  }
-  
-  //save day with comma
-  const day = dateArray[0] + ', ';
 
-  //replace all commas from split with spaces
-  const dateStr = dateArray.toString().replaceAll(',', ' ');
+    //access month object to get non-abbreviated month
+    //send month to get first letter capitalezed
+    monthElem = capitalizeFirstLetter(months[monthElem.toLowerCase()]);
+  
+    //save day with comma
+    dayElem = dayElem + ', ';
+  
+  //Put all part of the date string together
+  const finalDate = `${dayElem} ${monthElem} ${dateELem} ${yearElem}`;
 
-  //Slice up date to add one comma back after day
-  return day + dateStr.slice(4); 
+  return finalDate;
 };
 
 function capitalizeFirstLetter(string) {

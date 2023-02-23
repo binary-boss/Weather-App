@@ -92,7 +92,7 @@ console.log(myCity);
 const sunrise = myCity[4][1]['sunrise'];
 const sunSet = myCity[4][1]['sunset'];
 const hoursSinceEp = sunrise/86400000;
-console.log(sunSet/86400000);
+console.log(sunSet/86400000); 
 
 return hoursSinceEp;
 };
