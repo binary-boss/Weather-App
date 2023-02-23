@@ -32,37 +32,36 @@ async function getLocation(e) {
   //Big if block to catch empty input field error, prevent from attemping to connect to API when empty
   //prompt user to enter city.
   if (city) {
-    
-    try {
-        //API call 1
-        //Take user input city to get latitude and longitude cordinates
-        const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},us&limit=5&appid=${APIkey}`);
+              try {
+                  //API call 1
+                  //Take user input city to get latitude and longitude cordinates
+                  const locationResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},us&limit=5&appid=${APIkey}`);
 
-        const data = await locationResponse.json();
-        const cityLocation = Object.values(data);
-       
-        //Get latitude and longitude from data obj
-        lat = (cityLocation[0]['lat']);
-        lon = (cityLocation[0]['lon']);
+                  const data = await locationResponse.json();
+                  const cityLocation = Object.values(data);
+                
+                  //Get latitude and longitude from data obj
+                  lat = (cityLocation[0]['lat']);
+                  lon = (cityLocation[0]['lon']);
 
-       
-        //API call 2
-        //Send lat and lon cordinates and get weather data
-        const weatherResponse = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&id=524901&appid=${APIkey}`);
-        const data1 = await weatherResponse.json();
-        const myCity = Object.values(data1);
-   
-        //Call render function to get weather info from array Obj
-        //Then add pre-build html block from render's return function with weather data inserted.
-        const APIdata = render(myCity);
-        document.getElementById("APIinfo").innerHTML = APIdata;
+                
+                  //API call 2
+                  //Send lat and lon cordinates and get weather data
+                  const weatherResponse = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&id=524901&units=imperial&appid=${APIkey}`);
+                  const data1 = await weatherResponse.json();
+                  const myCity = Object.values(data1);
+              
+                  //Call render function to get weather info from array Obj
+                  //Then add pre-build html block from render's return function with weather data inserted.
+                  const APIdata = render(myCity);
+                  document.getElementById("APIinfo").innerHTML = APIdata;
+                
+              } catch (error) {
 
-    } catch (error) {
+              const  errormsg = `<div id='error'>Invalid input. Please enter city.</div>`;
+                document.getElementById("APIinfo").innerHTML = errormsg;
 
-     const  errormsg = `<div id='error'>Invalid input. Please enter city.</div>`;
-      document.getElementById("APIinfo").innerHTML = errormsg;
-
-    };
+              };
    
     } else {
       const msg = `<div id='error'>Input field cannot be empty.<br/>Please enter a city.</div>`;
@@ -83,17 +82,15 @@ const userCountry = (myCity[4]['country']);
 const todaysDate = (myCity[3][0]['dt_txt']);
 const convertedDate = convertDate(todaysDate);
 
-const temp = (myCity[3][0]['main']['temp']);
-const convTemp = convertKelvin(temp);
+const temp = Math.round((myCity[3][0]['main']['temp']));
+console.log(temp);
 
 let weather = (myCity[3][0]['weather'][0]['description'])
 weather = capitalizeFirstLetter(weather);
 
-const highTemp = (myCity[3][0]['main']['temp_max']);
-const convhighTemp = convertKelvin(temp);
+const highTemp = Math.round((myCity[3][0]['main']['temp_max']));
 
-const lowTemp = (myCity[3][0]['main']['temp_min']);
-const convLowTemp = convertKelvin(temp);
+const lowTemp = Math.round((myCity[3][0]['main']['temp_min']));
 
 //Insert data into HTML divs. Then send back to caller
 let myString = `    
@@ -102,9 +99,9 @@ let myString = `
 
           <div id="myHr"></div>
 
-          <div class="myAlign">Temp:  ${convTemp}&#8457;</div>
+          <div class="myAlign">Temp:  ${temp}&#8457;</div>
           <div class="myAlign">Weather: ${weather}</div>
-          <div class="myAlign">Temp Range: ${convhighTemp}&#8457; / ${convLowTemp}&#8457;</div>`;
+          <div class="myAlign">Temp Range: ${highTemp}&#8457; / ${lowTemp}&#8457;</div>`;
 
 //Access code
 //console.log(`${responseCode}`);
@@ -156,11 +153,6 @@ function convertDate(date) {
 
   //Slice up date to add one comma back after day
   return day + dateStr.slice(4); 
-};
-
-//Convert temps
-function convertKelvin(kelvin) {
-  return Math.round((kelvin - 273.15) * 9 / 5 + 32 * 10 /10);
 };
 
 function capitalizeFirstLetter(string) {
